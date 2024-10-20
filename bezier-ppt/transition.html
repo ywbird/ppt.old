@@ -1,0 +1,66 @@
+<div class="container">
+  <div class="box box-1"><img src="cubic-bezier-linear.png" alt=""></div>
+  <div class="box box-2"><img src="cubic-bezier-ease.png" alt=""></div>
+  <div class="box box-3"><img src="cubic-bezier-ease-in.png" alt=""></div>
+  <div class="box box-4"><img src="cubic-bezier-ease-out.png" alt=""></div>
+  <div class="box box-5"><img src="cubic-bezier-ease-in-out.png" alt=""></div>
+</div>
+
+<style>
+  .container {
+    display: grid;
+    gap: 10px;
+  }
+  .box {
+    display: grid;
+    place-items: center;
+    color: white;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: bold;
+    width: 80px;
+    height: 80px;
+    animation-duration: 3s;
+    animation-iteration-count: infinite;
+    animation-name: custom-linear;
+    animation-direction: normal;
+    background-color: darkslateblue;
+  }
+  .box img {
+    width: 100%;
+  }
+
+  .box-1 {
+    animation-timing-function: linear;
+  }
+  .box-2 {
+    animation-timing-function: ease;
+  }
+  .box-3 {
+    animation-timing-function: ease-in;
+  }
+  .box-4 {
+    animation-timing-function: ease-out;
+  }
+  .box-5 {
+    animation-timing-function: ease-in-out;
+  }
+
+  @keyframes custom-linear {
+    0% {
+      translate: 0px;
+    }
+    20% {
+      translate: 0px;
+    }
+    80% {
+      translate: 300px;
+    }
+    100% {
+      translate: 300px;
+    }
+  }
+
+  small {
+    word-wrap: normal;
+  }
+</style>
