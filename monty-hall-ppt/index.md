@@ -107,12 +107,12 @@ $$
 \begin{cases}
 1\ (\text{상품 있는 문을 고를 가짓수}) \times
 \begin{cases}
-2\ (\text{선택을 바꿀 가짓수}) &\rightarrow \text{변경 실패 가짓수}:  2\\
+1\ (\text{선택을 바꿀 가짓수}) &\rightarrow \text{변경 실패 가짓수}:  1\\
 1\ (\text{선택을 바꾸지 않을 가짓수}) &\rightarrow \text{유지 성공 가짓수}: 1\\
 \end{cases} \\
 2\ (\text{상품 없는 문을 고를 가짓수}) \times
 \begin{cases}
-2\ (\text{선택을바꿀가짓수}) &\rightarrow \text{변경 성공 가짓수}: 4\\
+1\ (\text{선택을바꿀가짓수}) &\rightarrow \text{변경 성공 가짓수}: 2\\
 1\ (\text{선택을 바꾸지 않을 가짓수}) &\rightarrow \text{유지 실패 가짓수}: 2\\
 \end{cases} \\
 \end{cases}
@@ -125,8 +125,8 @@ $$
 <div>
 
 - 선택을 변경했을때 경우의 수:
-    - 성공 $4$
-    - 실패 $2$
+    - 성공 $2$
+    - 실패 $1$
     
 </div>
 <div>
