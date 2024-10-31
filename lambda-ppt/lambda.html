@@ -302,6 +302,7 @@ x.\underbrace{f}_{1}\ x \\
 x.\underbrace{f\ f}_{2}\ x \\
 &amp; 3 = \lambda f. \lambda x. f^3 \ x = \lambda f. \lambda
 x.\underbrace{f\ f\ f}_{3}\ x \\
+&amp;\shortvdotswithin{=}
 \end{align}
 \]</span> 수를 정의 했으니 연산을 정의할 수 있다.</p>
 <p>먼저 처치 숫자에 <span class="math inline">\(1\)</span>을 더하는
@@ -338,7 +339,7 @@ x.\underbrace{f\ f\ f}_{3}\ x \\
 있다. <span class="math display">\[
 \text{MULT} := \lambda x. \lambda y. x\ (ADD\ y)\ 0
 \]</span> <span class="math inline">\(\text{MULT}\)</span>을 이용해
-<span class="math inline">\(2\cdot 3=6\)</span>을 시현해보자. <span class="math display">\[
+<span class="math inline">\(2\times 3=6\)</span>을 시현해보자. <span class="math display">\[
 \begin{align}
 &amp; \text{MULT}\ 2\ 3 \\
 &amp; = \big(\lambda x. \lambda y. x\ (ADD\ y)\ 0\big)\ 2\ 3
@@ -349,16 +350,24 @@ x.\underbrace{f\ f\ f}_{3}\ x \\
 &amp; = 0 + 3 + 3 \\
 &amp; = 6
 \end{align}
-\]</span> 이와 같은 계산의 확장을 통해 기본적인 사칙연산부터 제곱 등 더
-다양하고 복잡한 연산을 구현할 수 있다. #### 2.진리 표현 참/거짓 값을
-다음과 같이 표현할 수 있다. <span class="math display">\[
+\]</span> 위와 비슷하지만 더욱 어려운 여러 응용을 이용해 <span class="math inline">\(1\)</span>을 빼는 함수인 <span class="math inline">\(\text{PRED}\)</span>(predecessor), 뺄샘 함수 <span class="math inline">\(\text{SUB}\)</span>(subtraction), 나숫샘 함수
+<span class="math inline">\(\text{DIV}\)</span>(division)을 구현할 수
+있다. 여기서 제약은, 처치 숫자의 구현 범위가 <span class="math inline">\(\mathbb{N}\cup\{0\}\)</span>이므로 값의 결과가
+실제로는 음수로 가면 처치 숫자에서는 <span class="math inline">\(0\)</span>이 된다는 것이다.</p>
+<p>이와 같은 계산의 확장을 통해 기본적인 사칙연산부터 제곱 등 더
+다양하고 복잡한 연산을 구현할 수 있다.</p>
+<h4 id="진리-표현">2.진리 표현</h4>
+<p>참/거짓 값을 다음과 같이 표현할 수 있다. <span class="math display">\[
 \begin{align}
 \text{True} := \lambda x.\lambda y.x \\
 \text{False} := \lambda x.\lambda y.y
 \end{align}
 \]</span> 보이는 것처럼, <span class="math inline">\(\text{True}\)</span>는 첫번째 변수를 반환하고,
 <span class="math inline">\(\text{False}\)</span>는 두번째 변수를
-반환함을 알 수 있는데, 이를 이용해 여러 논리 연산을 구현할 수 있다.</p>
+반환함을 알 수 있는데, 이를 이용해 여러 논리 연산을 구현할 수 있다. &gt;
+이때, <span class="math inline">\(\text{False}\)</span>는 처치 숫자
+<span class="math inline">\(0\)</span>과 <span class="math inline">\(\alpha\)</span>-동치로 일치하는 람다 항을 가진다는
+것을 알 수 있다.</p>
 <p>먼저 <span class="math inline">\(\text{AND}(\land)\)</span> 연산
 <span class="math display">\[
 \text{AND} := \lambda x. \lambda y. x\ y\ x
@@ -411,13 +420,13 @@ y\)</span></th>
 <p>이중 두번째 행을 예시로 보면, <span class="math display">\[
 \begin{align}
 &amp; \text{AND} \ \text{False}\  \text{True} \\
-&amp; = (\lambda x. \lambda y. x\ y\ x) \ \text{False}\  \text{True}
-\rightarrow_{\beta}\  \text{False}\ \text{True}\ \text{False}  \\
-&amp; = (\lambda x.\lambda y.y)\ \text{True}\ \text{False}
-\rightarrow_{\beta}\ \text{False}
+&amp; = (\lambda x. \lambda y. x\ y\ x) \ \text{False}\  \text{True} \\
+&amp; \rightarrow_{\beta}\  \text{False}\ \text{True}\ \text{False}  \\
+&amp; = (\lambda x.\lambda y.y)\ \text{True}\ \text{False} \\
+&amp; \rightarrow_{\beta}\ \text{False}
 \end{align}
 \]</span></p>
-<p>다음으로 <span class="math inline">\(\text{OR}(\lor)\)</span>, <span class="math inline">\(\text{NOT}(\lnot)\)</span>`</p>
+<p>다음으로 <span class="math inline">\(\text{OR}(\lor)\)</span>, <span class="math inline">\(\text{NOT}(\lnot)\)</span></p>
 <p><span class="math display">\[
 \begin{align}
 &amp; \text{OR} := \lambda x. \lambda y. x\ x\ y \\
@@ -427,8 +436,87 @@ y\)</span></th>
 \]</span></p>
 <p>마지막으로 <code>IF-ELSE</code>문을 구현 할 수 있다. <span class="math inline">\(c\)</span>는 조건, <span class="math inline">\(x\)</span>는 참일때 실행, <span class="math inline">\(y\)</span>는 거짓일때(else) 실행된다. <span class="math display">\[
 \text{IF}:=\lambda c. \lambda x. \lambda y. c\ x\ y
+\]</span> 추가로 값이 <span class="math inline">\(0\)</span>인지
+판별하는 <span class="math inline">\(\text{IsZero}\)</span>함수를
+구현하여 유용히 쓸 수 있다. <span class="math display">\[
+\text{IsZero} := \lambda x.x\ (\lambda y.\text{False})\ \text{True}
+\]</span> &gt; 두 처치 숫자가 같거나 한쪽이 큰지 알려면 한쪽에서 다른
+한쪽을 뺀 뒤 <span class="math inline">\(\text{IsZero}\)</span> 함수로
+연산하여 알 수 있다.</p>
+<p><span class="math inline">\(\text{IsZero}\)</span>에 <span class="math inline">\(0\)</span>과 <span class="math inline">\(1\)</span>을 넣어 계산해 보면 다음과 같다. <span class="math display">\[
+\begin{align}
+&amp; IsZero\ 0 \\
+&amp; = \big(\lambda x.x\ (\lambda y.\text{False})\ \text{True}\big)\ 0
+\\
+&amp; \rightarrow_{\beta}\ 0\ (\lambda y.\text{False})\ \text{True}\
+[0:=\lambda f. \lambda x.x] \\
+&amp; = (\lambda f. \lambda x.x)\ (\lambda y.\text{False})\ \text{True}
+\\
+&amp; \rightarrow_{\beta}\ \text{True}
+\end{align}
+\]</span> <span class="math display">\[
+\begin{align}
+&amp; IsZero\ 1 \\
+&amp; = \big(\lambda x.x\ (\lambda y.\text{False})\ \text{True}\big)\ 1
+\\
+&amp; \rightarrow_{\beta}\ 1\ (\lambda y.\text{False})\ \text{True}\
+[1:=\lambda f. \lambda x.f\ x] \\
+&amp; = (\lambda f. \lambda x.f\ x)\ (\lambda y.\text{False})\
+\text{True} \\
+&amp; \rightarrow_{\beta}\ (\lambda y.\text{False})\ \text{True} \\
+&amp; \rightarrow_{\beta}\ \text{Fasle}
+\end{align}
 \]</span></p>
 <p>이외에도 수많은 수, 논리 연산이 있지만, 그중 가장 간단한 것만
 기술하였다.</p>
+<h3 id="loop">Loop</h3>
+<p>앞서 <span class="math inline">\(Church\ Numeral\)</span>, <span class="math inline">\(Boolean\)</span>, <span class="math inline">\(IF-ELSE\)</span>를 구현 하였고 이제 <span class="math inline">\(Loop\)</span>를 구현할 수 있다.</p>
+<p>가장 기본적인 루프(반복문)은 다음과 같이 구현할 수 있다. <span class="math display">\[
+\lambda x. (\lambda y. x\ x)\ (\lambda y. x\ x)
+\]</span> 이를 적용해보면 다음과 같다. <span class="math display">\[
+\begin{align}
+&amp; \lambda x. (\lambda y. x\ x)\ (\lambda y. x\ x)
+\Leftrightarrow_{\alpha}\ \lambda x. (\lambda y. x\ x)\ (\lambda z. x\
+x)\\
+&amp; \rightarrow_{\beta}\ \lambda y. (\lambda z. x\ x)\ (\lambda z. x\
+x) \\\\
+&amp; \lambda x. (\lambda y. x\ x)\ (\lambda y. x\ x)
+\Leftrightarrow_{\alpha}\ \lambda y. (\lambda z. x\ x)\ (\lambda z. x\
+x)
+\end{align}
+\]</span> <span class="math inline">\(\alpha\)</span>-동치에 의해 처음
+식과 <span class="math inline">\(\beta\)</span>-축약의 결과가 같으므로,
+위 람다 항은 무한히 반복된다. 하지만, 위 루프는 실제로 사용할 쓸모가
+없다. 단순 반복 이외에 다른 기능을 하지 못하기 때문이다.</p>
+<p>학자들은 이를 반복 함수에 사용하기 위해 <span class="math inline">\(Y\)</span>-combinator 를 만들어 내었다. <span class="math display">\[
+Y =\lambda f. (\lambda x.f(x\ x))\ (\lambda x.f(x\ x))
+\]</span> 실제로 <span class="math inline">\(g\)</span>를 <span class="math inline">\(Y\)</span>에 대입하면 아래와 같다. <span class="math display">\[
+\begin{align}
+&amp; Y\ g \\
+&amp; = \bigg(\lambda f. \big(\lambda x.f(x\ x)\big)\ \big(\lambda
+x.f(x\ x)\big)\bigg)\ g \rightarrow_{\beta}\ \big(\lambda x.g(x\
+x)\big)\ \big(\lambda x.g(x\ x)\big) \\
+&amp; \rightarrow_{\beta}\ g\bigg(\big(\lambda x.g(x\ x)\big)\
+\big(\lambda x.g(x\ x)\big)\bigg) \\
+&amp; = g\ (Y\ g)
+\end{align}
+\]</span> 이므로 제귀가 성립된다. <span class="math display">\[
+\begin{align}
+Y g &amp;= g\ g\ g\ ... \\
+&amp; = g(\ g(\ g(\ ...)\ )\ )
+\end{align}
+\]</span> 제귀를 이용한 간단한 계승(팩토리얼) 함수를 구현해보자.</p>
+<p>먼저 계승 함수는 아래의 정의를 가진다. <span class="math display">\[
+fac(x) =
+\begin{cases}
+1 &amp; (x=0)\\
+x\times fac(x-1) &amp; (\text{otherwise})
+\end{cases}
+\]</span> 이를 람다 항으로 추상화 시키면 아래와 같다. <span class="math display">\[
+\begin{align}
+\text{Fac} := Y\ \big(\lambda f. \lambda n.\text{IF}\ (\text{IsZero}\
+n)\ 1\ (\text{Mult}\ n\ (f\ (\text{Pred}\ n)))\big)
+\end{align}
+\]</span></p>
 </body>
 </html>
